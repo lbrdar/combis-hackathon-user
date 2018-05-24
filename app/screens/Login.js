@@ -31,7 +31,7 @@ export default class Login extends React.Component {
           onChange={(text) => this.setState({ pass: text})}
           value={this.state.pass}
         />
-        <Button title="Submit" onPress={this._submit} />
+        <Button title="Submit" onPress={this._submit} color="#ff2222" style={{ margin: 20 }} />
       </ScrollView>
     )
   }

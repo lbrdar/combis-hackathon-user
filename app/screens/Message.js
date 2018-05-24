@@ -13,8 +13,8 @@ export default class Message extends React.PureComponent {
 
   _renderButtons = () => (
     <View style={styles.buttons}>
+      <Button title="Decline" onPress={this._declineInvite} color="#ff2222" />
       <Button title="Accept" onPress={this._acceptInvite} />
-      <Button title="Decline" onPress={this._declineInvite} />
     </View>
   );
 
@@ -37,8 +37,9 @@ export default class Message extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20,
-    alignItems: 'center'
+    padding: 20,
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   buttons: {
     flex: 1,

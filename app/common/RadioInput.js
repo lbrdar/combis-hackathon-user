@@ -8,7 +8,7 @@ export default class RadioInput extends React.Component {
     <TouchableOpacity key={option} style={styles.option} onPress={() => this.props.onChange(option)}>
       <Icon
         name={option === this.props.value ? 'radio-button-unchecked' : 'radio-button-checked'}
-        size={30}
+        size={25}
         color="darkgray"
       />
       <Text style={styles.optionLabel}>{option}</Text>
@@ -30,23 +30,27 @@ export default class RadioInput extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginVertical: 10
   },
   label: {
-    padding: 10,
-    flex: 1
+    flex: 1,
+    top: 20
   },
   options: {
+    padding: 10,
     flexDirection: 'row',
     flex: 1,
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'flex-start'
   },
   option: {
     flexDirection: 'row',
-    margin: 5
+    margin: 5,
+    marginHorizontal: 10
   },
   optionLabel: {
+    marginLeft: 5,
     lineHeight: 30
   }
 });

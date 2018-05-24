@@ -34,8 +34,9 @@ export default class Donation extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20,
-    alignItems: 'center'
+    padding: 20,
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   input: {
     width: '100%',

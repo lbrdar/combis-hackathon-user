@@ -56,7 +56,7 @@ export default class Signup extends React.Component {
         <RadioInput
           label="Sex"
           value={this.state.sex}
-          options={['Male', 'Female']}
+          options={['M', 'F']}
           onChange={(sex) => this.setState({ sex })}
         />
         <Input
@@ -84,7 +84,7 @@ export default class Signup extends React.Component {
           onChange={(text) => this.setState({ pass2: text})}
           value={this.state.pass2}
         />
-        <Button title="Submit" onPress={this._submit} />
+        <Button title="Submit" onPress={this._submit} color="#ff2222" style={{ margin: 20 }} />
       </ScrollView>
     )
   }

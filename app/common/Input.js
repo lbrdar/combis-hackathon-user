@@ -22,13 +22,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   label: {
-    flex: 1
+    flex: 1,
+    top: 20
   },
   input: {
-    flex: 1,
-    borderWidth: 1,
+    flex: 2,
+    borderBottomWidth: 1,
     borderColor: 'gray',
-    padding: 10,
+    padding: 5,
+    fontSize: 14,
     margin: 10
   }
 });

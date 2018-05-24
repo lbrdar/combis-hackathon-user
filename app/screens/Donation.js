@@ -25,7 +25,7 @@ export default class Donation extends React.PureComponent {
       <View style={styles.container}>
         <Text>Date of donation: {date}</Text>
         <Text>Location of donation: {location}</Text>
-        <Button title="Get certificate" onPress={this._displayPrompt} />
+        <Button title="Get certificate" onPress={this._displayPrompt} color="#ff2222" />
 
         <Prompt
           title="Organization's email"
@@ -43,8 +43,9 @@ export default class Donation extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20,
-    alignItems: 'center'
+    padding: 20,
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   buttons: {
     flex: 1,

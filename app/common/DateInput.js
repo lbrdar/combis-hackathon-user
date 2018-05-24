@@ -9,6 +9,7 @@ export default class DateInput extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.label}>{label}</Text>
+        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'stretch' }}>
         <DatePicker
           date={value}
           mode="date"
@@ -19,8 +20,34 @@ export default class DateInput extends React.Component {
           cancelBtnText="Cancel"
           showIcon={false}
           onDateChange={onChange}
+          style={{ flex: 1, alignItems: 'stretch'  }}
+          customStyles={{
+            dateTouchBody: {
+              height: 44,
+              flex: 1
+            },
+            dateInput: {
+              height: 44,
+              borderWidth: 0,
+              borderBottomWidth: 1,
+              borderBottomColor: 'gray',
+              alignItems: 'stretch',
+              padding: 5,
+              flex: 1
+            },
+            dateText: {
+              lineHeight: 44,
+              fontSize: 14
+            },
+            placeholderText: {
+              color: 'gray',
+              lineHeight: 44,
+              fontSize: 14
+            }
+          }}
           {...dateInputProps}
         />
+        </View>
       </View>
     )
   }
@@ -31,13 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   label: {
-    flex: 1
-  },
-  input: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
-    margin: 10
+    top: 20
   }
 });
