@@ -4,7 +4,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 
-import { Home, Account, Donation, Donations, Feedback, Inbox, Questionnaires, Message } from "../screens";
+import { Home, Account, Donation, Donations, Feedback, Inbox, Questionnaire, Questionnaires, Message } from "../screens";
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -18,6 +18,7 @@ const SignedIn = createStackNavigator({
       headerStyle
     }
   },
+
   Account: {
     screen: Account,
     navigationOptions: {
@@ -25,6 +26,7 @@ const SignedIn = createStackNavigator({
       headerStyle
     }
   },
+
   Donations: {
     screen: Donations,
     navigationOptions: {
@@ -38,6 +40,7 @@ const SignedIn = createStackNavigator({
       headerStyle
     }
   },
+
   Feedback: {
     screen: Feedback,
     navigationOptions: {
@@ -45,6 +48,7 @@ const SignedIn = createStackNavigator({
       headerStyle
     }
   },
+
   Inbox: {
     screen: Inbox,
     navigationOptions: {
@@ -54,6 +58,13 @@ const SignedIn = createStackNavigator({
   },
   Message: {
     screen: Message,
+    navigationOptions: {
+      headerStyle
+    }
+  },
+
+  Questionnaire: {
+    screen: Questionnaire,
     navigationOptions: {
       headerStyle
     }

@@ -13,4 +13,5 @@ export { default as Feedback } from './Feedback';
 export { default as Inbox } from './Inbox';
 export { default as Message } from './Message';
 
+export { default as Questionnaire } from './Questionnaire';
 export { default as Questionnaires } from './Questionnaires';
