@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Loading } from "../common";
 
 export default class Donations extends React.Component {
@@ -31,11 +31,11 @@ export default class Donations extends React.Component {
   }
 
   _renderRow = ({ item: donation }) => (
-    <View style={styles.row}>
+    <TouchableOpacity style={styles.row} onPress={() => this.props.navigation.navigate('Donation', { ...donation })}>
      <Text numberOfLines={1} style={styles.label}>
        {donation.date} ({donation.location})
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 
   _keyExtractor = (item) => item.id;

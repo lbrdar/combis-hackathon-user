@@ -4,7 +4,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 
-import { Home, Account, Donations, Feedback, Inbox, Questionnaires, Message } from "../screens";
+import { Home, Account, Donation, Donations, Feedback, Inbox, Questionnaires, Message } from "../screens";
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -29,6 +29,12 @@ const SignedIn = createStackNavigator({
     screen: Donations,
     navigationOptions: {
       title: "My Donations",
+      headerStyle
+    }
+  },
+  Donation: {
+    screen: Donation,
+    navigationOptions: {
       headerStyle
     }
   },
