@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
-import { Button, ScrollView, StyleSheet, Image } from 'react-native';
+import { Button, ScrollView, StyleSheet, Image, Text } from 'react-native';
 import { Input,DateInput, RadioInput, Loading } from '../common/index';
 import { saveToken } from '../utils/auth';
 
@@ -146,6 +146,15 @@ export default class Signup extends React.Component {
           value={this.state.ConfirmPassword}
         />
         <Button title="Submit" onPress={this._submit} color="#ff2222" style={{ margin: 20, marginVertical: 40 }} />
+
+        <Text style={styles.note}>
+          Blood Donation needs your personal data to successfully track blood reserves. We will use your email and phone
+          number to contact you about organized blood donating events and for nothing else. Leo Brdar is responsible for
+          personal information security and will gladly help you with any questions or issues you have - you can contact
+          him at leo.brdar@gmail.com. You are free to delete your account at any time and with that you are automatically
+          deleting all your personal data from our database. Otherwise, your data will be securely stored with us for an
+          indefinite period of time.
+        </Text>
         {this.state.loading && <Loading />}
       </ScrollView>
     )
@@ -167,5 +176,11 @@ const styles = StyleSheet.create({
   image: {
     height: 120,
     marginVertical: 20
+  },
+  note: {
+    paddingTop: 10,
+    fontSize: 12,
+    fontStyle: 'italic',
+    textAlign: 'justify'
   }
 });
