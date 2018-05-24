@@ -11,7 +11,7 @@ export const isSignedIn = () => {
     AsyncStorage.getItem(USER_KEY)
       .then(res => {
         if (res !== null) {
-          resolve(true);
+          resolve(false);
         } else {
           resolve(false);
         }

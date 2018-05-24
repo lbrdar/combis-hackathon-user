@@ -15,7 +15,7 @@ function LoadingView(props) {
 LoadingView.defaultProps = {
   color: 'gray',
   size: 'large',
-  overlayColor: 'lightgray',
+  overlayColor: 'rgba(100,100,100,.5)',
   style: {}
 };
 

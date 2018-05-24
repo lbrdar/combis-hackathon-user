@@ -5,7 +5,7 @@ import { onSignIn } from "../utils/auth";
 
 export default class Login extends React.Component {
   state = {
-    email: '',
+    username: '',
     pass: ''
   };
 
@@ -20,9 +20,9 @@ export default class Login extends React.Component {
         <Input
           autoFocus
           autoCapitalize="none"
-          label="Email"
-          onChange={(text) => this.setState({ email: text})}
-          value={this.state.email}
+          label="Username"
+          onChange={(text) => this.setState({ username: text})}
+          value={this.state.username}
         />
         <Input
           autoCapitalize="none"

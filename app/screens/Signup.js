@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, ScrollView, StyleSheet } from 'react-native';
 import { Input,DateInput, RadioInput } from '../common/index';
@@ -13,13 +14,55 @@ export default class Signup extends React.Component {
     sex: null,
     address: '',
     bloodType: '',
-    pass: '',
-    pass2: ''
+    username: '',
+    password: '',
+    password2: ''
+  };
+
+  _getToken = () => {
+    const params = {
+      grant_type: 'password',
+      username: 'Proba60',
+      password: 'SuperPass1!'
+    };
+
+    window.fetch('https://363fcfa6.ngrok.io/token', {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: Object.keys(params).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&'),
+      method: 'POST'
+    }).then(res => res.json())
+      .then(console.log)
+      .catch(console.log);
+
+    onSignIn();
   };
 
   _submit = () => {
-    // TODO
-    onSignIn();
+    this.context.setLoading(true);
+    window.fetch('https://363fcfa6.ngrok.io/api/account/register', {
+      body: JSON.stringify({
+        Username: "Proba60",
+        Password: "SuperPass1!",
+        ConfirmPassword: "SuperPass1!"
+      }),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST'
+    }).then(res => {
+      if (res.status === 200) {
+        this._getToken();
+      } else {
+        this.context.setLoading(false);
+        alert('Something went wrong');
+      }
+    })
+      .catch(() => {
+        this.context.setLoading(false);
+        alert('Something went wrong');
+      });
   };
 
   render() {
@@ -72,23 +115,33 @@ export default class Signup extends React.Component {
         />
         <Input
           autoCapitalize="none"
+          label="Username"
+          onChange={(text) => this.setState({ username: text})}
+          value={this.state.username}
+        />
+        <Input
+          autoCapitalize="none"
           secureTextEntry
           label="Password"
-          onChange={(text) => this.setState({ pass: text})}
-          value={this.state.pass}
+          onChange={(text) => this.setState({ password: text})}
+          value={this.state.password}
         />
         <Input
           autoCapitalize="none"
           secureTextEntry
           label="Repeat Password"
-          onChange={(text) => this.setState({ pass2: text})}
-          value={this.state.pass2}
+          onChange={(text) => this.setState({ password2: text})}
+          value={this.state.password2}
         />
         <Button title="Submit" onPress={this._submit} color="#ff2222" style={{ margin: 20 }} />
       </ScrollView>
     )
   }
 }
+
+Signup.contextTypes = {
+  setLoading: PropTypes.func
+};
 
 const styles = StyleSheet.create({
   container: {
