@@ -7,7 +7,7 @@ export default class RadioInput extends React.Component {
   _renderOption = option => (
     <TouchableOpacity key={option} style={styles.option} onPress={() => this.props.onChange(option)}>
       <Icon
-        name={option === this.props.value ? 'radio-button-unchecked' : 'radio-button-checked'}
+        name={option === this.props.value ? 'radio-button-checked' : 'radio-button-unchecked'}
         size={25}
         color="darkgray"
       />

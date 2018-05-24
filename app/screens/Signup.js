@@ -1,29 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, ScrollView, StyleSheet } from 'react-native';
-import { Input,DateInput, RadioInput } from '../common/index';
-import { onSignIn } from '../utils/auth';
+import moment from 'moment';
+import { Button, ScrollView, StyleSheet, Image } from 'react-native';
+import { Input,DateInput, RadioInput, Loading } from '../common/index';
+import { saveToken } from '../utils/auth';
 
 export default class Signup extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    dob: '',
-    sex: null,
-    address: '',
-    bloodType: '',
-    username: '',
-    password: '',
-    password2: ''
+    Name: '',
+    PhoneNumber: '',
+    Email: '',
+    DateOfBirth: '',
+    Sex: null,
+    Address: '',
+    BloodType: '',
+    Password: '',
+    ConfirmPassword: '',
+
+    loading: false
   };
 
   _getToken = () => {
     const params = {
       grant_type: 'password',
-      username: 'Proba60',
-      password: 'SuperPass1!'
+      username: this.state.Email,
+      password: this.state.Password
     };
 
     window.fetch('https://363fcfa6.ngrok.io/token', {
@@ -32,21 +33,27 @@ export default class Signup extends React.Component {
       },
       body: Object.keys(params).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&'),
       method: 'POST'
-    }).then(res => res.json())
-      .then(console.log)
-      .catch(console.log);
-
-    onSignIn();
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json()
+      }
+      throw new Error('Request failed');
+    })
+      .then((res) => {
+        saveToken(res);
+        this.props.navigation.navigate('SignedIn');
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+        alert('Something went wrong');
+      });
   };
 
   _submit = () => {
-    this.context.setLoading(true);
+    if(!this._isValid()) return;
+    this.setState({ loading: true });
     window.fetch('https://363fcfa6.ngrok.io/api/account/register', {
-      body: JSON.stringify({
-        Username: "Proba60",
-        Password: "SuperPass1!",
-        ConfirmPassword: "SuperPass1!"
-      }),
+      body: JSON.stringify({ ...this.state, DateOfBirth: moment(this.state.DateOfBirth).format('DDMMYYYY') }),
       headers: {
         'content-type': 'application/json'
       },
@@ -55,85 +62,91 @@ export default class Signup extends React.Component {
       if (res.status === 200) {
         this._getToken();
       } else {
-        this.context.setLoading(false);
+        this.setState({ loading: false });
         alert('Something went wrong');
       }
     })
       .catch(() => {
-        this.context.setLoading(false);
+        this.setState({ loading: false });
         alert('Something went wrong');
       });
   };
 
+  _isValid = () => {
+    const { Name, Address, Password, BloodType, ConfirmPassword, DateOfBirth, Email, PhoneNumber, Sex } = this.state;
+
+    if (!Name || !Address || !Password || !BloodType || !ConfirmPassword || !DateOfBirth || !Email || !PhoneNumber || !Sex) {
+      alert('All fields are required');
+      return false;
+    }
+
+    if (Password !== ConfirmPassword) {
+      alert('Passwords don\'t match');
+      return false;
+    }
+
+    return true;
+  };
+
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView  style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+        <Image source={require('../../assets/images/blood-donation.jpg')} style={styles.image} resizeMode="contain" />
         <Input
-          autoFocus
-          label="First name"
-          onChange={(text) => this.setState({ firstName: text})}
-          value={this.state.firstName}
-        />
-        <Input
-          label="Last name"
-          onChange={(text) => this.setState({ lastName: text})}
-          value={this.state.lastName}
+          label="Name"
+          onChange={(text) => this.setState({ Name: text})}
+          value={this.state.Name}
         />
         <Input
           autoCapitalize="none"
           label="Phone"
-          onChange={(text) => this.setState({ phone: text})}
-          value={this.state.phone}
+          onChange={(text) => this.setState({ PhoneNumber: text})}
+          value={this.state.PhoneNumber}
         />
         <Input
           autoCapitalize="none"
           label="Email"
-          onChange={(text) => this.setState({ email: text})}
-          value={this.state.email}
+          onChange={(text) => this.setState({ Email: text})}
+          value={this.state.Email}
         />
         <DateInput
           label="Date of birth"
-          onChange={(date) => this.setState({ dob: date})}
-          value={this.state.dob}
+          onChange={(date) => this.setState({ DateOfBirth: date})}
+          value={this.state.DateOfBirth}
         />
         <RadioInput
           label="Sex"
-          value={this.state.sex}
+          value={this.state.Sex}
           options={['M', 'F']}
-          onChange={(sex) => this.setState({ sex })}
+          onChange={(Sex) => this.setState({ Sex })}
         />
         <Input
           label="Address"
-          onChange={(text) => this.setState({ address: text})}
-          value={this.state.address}
+          onChange={(text) => this.setState({ Address: text})}
+          value={this.state.Address}
         />
         <RadioInput
           label="Blood type"
-          value={this.state.bloodType}
+          value={this.state.BloodType}
           options={['AB+', 'AB-', 'A+', 'A-', 'B+', 'B-', '0+', '0-']}
-          onChange={(bloodType) => this.setState({ bloodType })}
-        />
-        <Input
-          autoCapitalize="none"
-          label="Username"
-          onChange={(text) => this.setState({ username: text})}
-          value={this.state.username}
+          onChange={(BloodType) => this.setState({ BloodType })}
         />
         <Input
           autoCapitalize="none"
           secureTextEntry
           label="Password"
-          onChange={(text) => this.setState({ password: text})}
-          value={this.state.password}
+          onChange={(text) => this.setState({ Password: text})}
+          value={this.state.Password}
         />
         <Input
           autoCapitalize="none"
           secureTextEntry
           label="Repeat Password"
-          onChange={(text) => this.setState({ password2: text})}
-          value={this.state.password2}
+          onChange={(text) => this.setState({ ConfirmPassword: text})}
+          value={this.state.ConfirmPassword}
         />
-        <Button title="Submit" onPress={this._submit} color="#ff2222" style={{ margin: 20 }} />
+        <Button title="Submit" onPress={this._submit} color="#ff2222" style={{ margin: 20, marginVertical: 40 }} />
+        {this.state.loading && <Loading />}
       </ScrollView>
     )
   }
@@ -144,11 +157,15 @@ Signup.contextTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContent: {
     marginVertical: 30,
     marginHorizontal: 16,
     paddingBottom: 50,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  image: {
+    height: 120,
+    marginVertical: 20
   }
 });
